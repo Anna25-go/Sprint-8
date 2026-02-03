@@ -52,11 +52,8 @@ func TestAddGetDelete(t *testing.T) {
 	// проверьте, что значения всех полей в полученном объекте совпадают со значениями полей в переменной parcel
 	parc, err := store.Get(number)
 	require.NoError(t, err, "Error getting: %v", err)
-	assert.Equal(t, number, parc.Number, "Parcel number mismatch. expected: %d, got: %d", number, parc.Number)
-	assert.Equal(t, parcel.Client, parc.Client, "Client mismatch. expected: %d, got: %d", parcel.Client, parc.Client)
-	assert.Equal(t, parcel.Status, parc.Status, "Status mismatch. expected: %s, got: %s", parcel.Status, parc.Status)
-	assert.Equal(t, parcel.Address, parc.Address, "Address mismatch. expected: %s, got: %s", parcel.Address, parc.Address)
-	assert.Equal(t, parcel.CreatedAt, parc.CreatedAt, "CreatedAt mismatch. expected: %s, got: %s", parcel.CreatedAt, parc.CreatedAt)
+	parcel.Number = number
+	assert.Equal(t, parcel, parc, "Parcel fields mismatch")
 
 	// delete
 	// удалите добавленную посылку, убедитесь в отсутствии ошибки
@@ -182,11 +179,6 @@ func TestGetByClient(t *testing.T) {
 		assert.True(t, exists, "Parcel with number %d not found in original map", parcel.Number)
 
 		// Проверяем значения полей
-		assert.Equal(t, client, parcel.Client, "Parcel %d: wrong client. expected %d, got %d", parcel.Number, client, parcel.Client)
-		assert.Equal(t, originalParcel.Client, parcel.Client, "Parcel %d: client mismatch. expected %d, got %d", parcel.Number, originalParcel.Client, parcel.Client)
-		assert.Equal(t, originalParcel.Status, parcel.Status, "Parcel %d: status mismatch. expected %s, got %s", parcel.Number, originalParcel.Status, parcel.Status)
-		assert.Equal(t, originalParcel.Address, parcel.Address, "Parcel %d: status mismatch. expected %s, got %s", parcel.Number, originalParcel.Address, parcel.Address)
-		assert.Equal(t, originalParcel.CreatedAt, parcel.CreatedAt, "Parcel %d: status mismatch. expected %s, got %s", parcel.Number, originalParcel.CreatedAt, parcel.CreatedAt)
-
+		assert.Equal(t, originalParcel, parcel, "Parcel fields mismatch")
 	}
 }
